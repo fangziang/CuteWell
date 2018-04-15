@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智能井盖管理系统</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+<!--引入百度地图-->
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"><!-- 导航链接 -->
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>智能井盖</span>Adminstrator</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>用户 <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"><span class="glyphicon glyphicon-user"></span> 概况</a></li>
+							<li><a href="#"><span class="glyphicon glyphicon-cog"></span> 设置</a></li>
+							<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> 注销</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="搜索">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li class="active"><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> 首页</a></li>
+			<li><a href="widgets.html"><span class="glyphicon glyphicon-th"></span> 系统管理</a></li>
+			<li><a href="charts.html"><span class="glyphicon glyphicon-stats"></span> 统计管理</a></li>
+			<li><a href="tables.html"><span class="glyphicon glyphicon-list-alt"></span> 日志管理</a></li>
+			<!--<li><a href="forms.html"><span class="glyphicon glyphicon-pencil"></span> Forms</a>      </li>-->
+			<li><a href="panels.html"><span class="glyphicon glyphicon-info-sign"></span>警告管理</a></li>
+			       <!--<li class="parent ">
+				<a href="#">
+					<span class="glyphicon glyphicon-list"></span> Dropdown <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span> 
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Sub Item 1
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Sub Item 2
+						</a>
+					</li>
+					<li>
+						<a class="" href="#">
+							<span class="glyphicon glyphicon-share-alt"></span> Sub Item 3
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="divider"></li>   -->
+			<li><a href="login.html"><span class="glyphicon glyphicon-user"></span> 用户登录</a></li>
+		</ul>
+		<div class="attribution">一井一盖团队</br>
+			<a href="#" target="_blank" title="智能井盖">智能井盖管理系统</a> </div>
+	</div><!--/.sidebar-->
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">首页</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Dashboard</h1>
+			</div>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-blue panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<em class="glyphicon glyphicon-shopping-cart glyphicon-l"></em>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">3</div>
+							<div class="text-muted">New Node</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-orange panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<em class="glyphicon glyphicon-comment glyphicon-l"></em>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">24</div>
+							<div class="text-muted">Comments</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-teal panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<em class="glyphicon glyphicon-user glyphicon-l"></em>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">2</div>
+							<div class="text-muted">New Users</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-red panel-widget">
+					<div class="row no-padding">
+						<div class="col-sm-3 col-lg-5 widget-left">
+							<em class="glyphicon glyphicon-stats glyphicon-l"></em>
+						</div>
+						<div class="col-sm-9 col-lg-7 widget-right">
+							<div class="large">25.2k</div>
+							<div class="text-muted">Upriver</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading"> Position Addressing</div>
+					<div class="panel-body">
+						<div>
+							<h2>百度地图</h2>
+							<!-- 按钮触发模态框 -->
+							<div style="width:100%;height:550px;" id="dituContent"></div>
+							</div>
+						<script type="text/javascript">
+                            //创建和初始化地图函数：
+                            function initMap(){
+                                createMap();//创建地图
+                                setMapEvent();//设置地图事件
+                                addMapControl();//向地图添加控件
+                                addMarker();//向地图中添加marker
+                            }
+
+                            //创建地图函数：
+                            function createMap(){
+                                var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+                                var point = new BMap.Point(113.500296,23.45686);//定义一个中心点坐标
+                                map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+                                window.map = map;//将map变量存储在全局
+                            }
+
+                            //地图事件设置函数：
+                            function setMapEvent(){
+                                map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                                map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                                map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                                map.enableKeyboard();//启用键盘上下左右键移动地图
+                            }
+
+                            //地图控件添加函数：
+                            function addMapControl(){
+                                //向地图中添加缩放控件
+                                var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+                                map.addControl(ctrl_nav);
+                                //向地图中添加缩略图控件
+                                var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+                                map.addControl(ctrl_ove);
+                                //向地图中添加比例尺控件
+                                var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+                                map.addControl(ctrl_sca);
+                            }
+
+                            //标注点数组
+                            var markerArr = [{title:"1",content:"类型：通讯井<br/>管辖：从化太平<br/>状态：正常<br/>地点：广州大学华软软件学院",point:"113.498868|23.456694",isOpen:0,icon:{w:21,h:21,l:0,t:0,x:6,lb:5}}
+                                ,{title:"2",content:"类型：通讯井<br/>管辖：从化太平<br/>状态：正常<br/>地点：广州大学华软软件学院",point:"113.499658|23.456578",isOpen:0,icon:{w:21,h:21,l:0,t:0,x:6,lb:5}}
+                                ,{title:"3",content:"类型：通讯井<br/>管辖：从化太平<br/>状态：正常<br/>地点：广州大学华软软件学院",point:"113.500071|23.458683",isOpen:0,icon:{w:21,h:21,l:0,t:0,x:6,lb:5}}
+                            ];
+                            //创建marker
+                            function addMarker(){
+                                for(var i=0;i<markerArr.length;i++){
+                                    var json = markerArr[i];
+                                    var p0 = json.point.split("|")[0];
+                                    var p1 = json.point.split("|")[1];
+                                    var point = new BMap.Point(p0,p1);
+                                    var iconImg = createIcon(json.icon);
+                                    var marker = new BMap.Marker(point,{icon:iconImg});
+                                    var iw = createInfoWindow(i);
+                                    var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
+                                    marker.setLabel(label);
+                                    map.addOverlay(marker);
+                                    label.setStyle({
+                                        borderColor:"#808080",
+                                        color:"#333",
+                                        cursor:"pointer"
+                                    });
+
+                                    (function(){
+                                        var index = i;
+                                        var _iw = createInfoWindow(i);
+                                        var _marker = marker;
+                                        _marker.addEventListener("click",function(){
+                                            this.openInfoWindow(_iw);
+                                        });
+                                        _iw.addEventListener("open",function(){
+                                            _marker.getLabel().hide();
+                                        })
+                                        _iw.addEventListener("close",function(){
+                                            _marker.getLabel().show();
+                                        })
+                                        label.addEventListener("click",function(){
+                                            _marker.openInfoWindow(_iw);
+                                        })
+                                        if(!!json.isOpen){
+                                            label.hide();
+                                            _marker.openInfoWindow(_iw);
+                                        }
+                                    })()
+                                }
+                            }
+                            //创建InfoWindow
+                            function createInfoWindow(i){
+                                var json = markerArr[i];
+                                var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");
+                                return iw;
+                            }
+                            //创建一个Icon
+                            function createIcon(json){
+                                var icon = new BMap.Icon("http://app.baidu.com/map/images/us_mk_icon.png", new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
+                                return icon;
+                            }
+
+                            initMap();//创建和初始化地图
+						</script>
+					<!--		<script type="text/javascript">
+                                $(function(){
+                                    $("#hidenMap").click(function(){
+                                        $("#maps").hide();
+                                    });
+                                    $("#createMap").click(function(){
+                                        $("#maps").show();
+                                        var map = new BMap.Map("maps");
+                                        var myCity = new BMap.LocalCity();
+                                        myCity.get(function(res){
+                                            map.centerAndZoom(res.center,res.level);
+                                        });
+                                    });
+                                });
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->
+		
+		<div class="row"><!--表格-->
+			<table class="table table-striped">
+				<caption class="">设备列表</caption>
+				<thead>
+				<tr>
+					<th>序号</th>
+					<th>井类型</th>
+					<th>设备编号</th>
+					<th>管理单位</th>
+					<th>时间</th>
+					<th>井盖状态</th>
+					<th>位置</th>
+					<th>备注</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>通讯井</td>
+						<td>00001</td>
+						<td>从化区太平镇</td>
+						<td>2018-05-01</td>
+						<td>正常</td>
+						<td>广东省广州市从化区太平镇华软软件学院</td>
+						<td>无</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>通讯井</td>
+						<td>00002</td>
+						<td>从化区太平镇</td>
+						<td>2018-05-01</td>
+						<td>正常</td>
+						<td>广东省广州市从化区太平镇华软软件学院</td>
+						<td>无</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>通讯井</td>
+						<td>00003</td>
+						<td>从化区太平镇</td>
+						<td>2018-05-01</td>
+						<td>正常</td>
+						<td>广东省广州市从化区太平镇华软软件学院</td>
+						<td>无</td>
+					</tr>
+				</tbody>
+			</table>
+		</div><!--/.row-->
+<!--
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
+<meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
+<title>百度地图API自定义地图</title>
+<!--引用百度地图API-->
+
+
+
+
+
+
+
+	</div>	<!--/.main-->
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/chart.min.js"></script>
+	<script src="js/chart-data.js"></script>
+	<script src="js/easypiechart.js"></script>
+	<script src="js/easypiechart-data.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script>
+		$('#calendar').datepicker({
+		});
+
+		!function ($) {
+		    $(document).on("click","ul.nav li.parent > a > span.icon", function(){          
+		        $(this).find('em:first').toggleClass("glyphicon-minus");      
+		    }); 
+		    $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>	
+</body>
+
+</html>

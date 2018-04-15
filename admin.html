@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.changer.hk/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.changer.hk/jquery/plugins/jquery.cookie.js"></script>
+    <!-- bootstrap-table -->
+    <link rel="stylesheet" href="http://code.changer.hk/bootstrap-table/1.6.0/bootstrap-table.min.css">
+    <script type="text/javascript" src="http://code.changer.hk/bootstrap-table/1.6.0/bootstrap-table.min.js"></script>
+    <style type="text/css">
+        #table {
+            padding: 0;
+        }
+
+        #table>tbody>tr {
+            cursor: pointer;
+        }
+
+        #table>tbody>tr>td.bs-checkbox {
+            vertical-align: middle;
+        }
+    </style>
+    <title>增删改查</title>
+</head>
+
+<body style="padding: 50px;">
+<div class="toolbar1" style="margin-bottom: -43px;">
+    <button id="remove" class="btn btn-danger" disabled>删除</button>
+    <button class="btn btn-primary" id="btn">新建</button>
+</div>
+<div id="table"></div>
+
+
+
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+
+
+<script type="text/javascript">
+    var $table = $('#table'),
+        $remove = $('#remove');
+
+    $(function() {
+        searchData();
+    });
+
+    function prepareDisplayData(data) {
+        return {
+            total: data.data.length,
+            fixedScroll: false,
+            rows: data.data
+        };
+    }
+
+    function searchData() {
+        var search_url = "./date_php/sel_equ.php";
+
+        //url 中问号后面的参数 action，这个对象就是查询的参数
+        var dataParam = {
+            action: "init_data_list"
+        };
+
+        $.ajax({
+            type: "get",
+            url: search_url,
+            data: dataParam,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                //测试是否可以拿到php中的数据
+                console.log(data);
+                //遍历这个数组
+                if(data.resultCode == 200) {
+                    var itemArr = data.data;
+                    for(var i = 0; i < itemArr.length; i++) {
+                        var item = itemArr[i];
+                        console.log(item);
+                    }
+                }
+
+                //bootstrap-table 组织数据
+                var displayData = prepareDisplayData(data);
+                if(displayData.total > 0) {
+                    $('#table').bootstrapTable('load', displayData);
+                } else {
+                    console.log("last page or empty.");
+                }
+            },
+            error: function(data) {
+                alert('服务器出错');
+            },
+        });
+    }
+
+    $('#table').bootstrapTable({
+        pagination: true,
+        sidePagination: 'server', //设置为服务器端分页
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 20, 50, 100],
+        search: true,
+        showColumns: true,
+        showRefresh: true,
+        columns: [{
+            field: 'state',
+            checkbox: true,
+        }, {
+            field: 'num',
+            title: '用户Id',
+            width: '50',
+            align: 'center',
+            valign: 'middle'
+        }, {
+            field: 'wellType',
+            title: '类型',
+            width: '500',
+            align: 'center',
+            valign: 'middle'
+        }, {
+                field: 'wellCover',
+                title: '井盖类型',
+                width: '500',
+                align: 'center',
+                valign: 'middle'
+            }, {
+                field: 'area',
+                title: '管辖区域',
+                width: '500',
+                align: 'center',
+                valign: 'middle'
+            },{
+            field: 'wellCondition',
+            title: '状态',
+            width: '500',
+            align: 'center',
+            valign: 'middle'
+        },{
+            field: 'wellCondition',
+            title: '施工状态',
+            width: '500',
+            align: 'center',
+            valign: 'middle'
+        },{
+                field: 'time',
+                title: '时间',
+                width: '500',
+                align: 'center',
+                valign: 'middle'
+            },{
+            field: 'remark',
+            title: '备注',
+            width: '500',
+            align: 'center',
+            valign: 'middle'
+        }]
+    }).on('page-change.bs.table', function(e, page, size) {
+        fillData();
+    }).on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function() {
+        var tes = !$table.bootstrapTable('getSelections').length
+        $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+    });
+
+
+    function forwardFormatter(value, row, index) {
+        var value = "修改";
+        return "<a href='#/" + row.user_id + "' class='btn btn-link'>" + value + "</a>";
+    }
+    var $table = $('#table'),
+        $remove = $('#remove');
+
+    $(function() {
+        delData();
+    });
+
+    function delData() {
+        $remove.on('click', function() {
+            if(confirm("是否继续删除")) {
+                var rows = $.map($table.bootstrapTable('getSelections'), function(row) {
+                    //返回选中的行的索引号
+                    return row.user_id;
+                });
+            }
+
+            $.map($table.bootstrapTable('getSelections'),function(row){
+                var del_url = "./date_php/del.php";
+                //根据userId删除数据,因为这个id就是 传给服务器的参数
+                var rowId = row.user_id;
+
+                $.ajax({
+                    type:"delete",
+                    url:del_url + "?action=del_row&rowId=" + rowId,
+                    dataType:"html",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function(data) {
+                        $table.bootstrapTable('remove',{
+                            field: 'user_id',
+                            values: rows
+                        });
+                        $remove.prop('disabled', true);
+                    },
+                    error:function(data){
+                        alert('删除失败！');
+                    }
+                });
+            });
+        })
+    }
+    var $table = $('#table'),
+        $remove = $('#remove');
+
+    $(function() {
+        searchData();
+        delData();
+
+        $('#save').click(function(){
+            addData();
+        });
+    });
+    function addData(){
+        var userName = $('#userName').val();
+        var userAge = $("#userAge").val();
+        var userSex = $('#user-sex').val() == '0' ? '男' : '女';
+
+        var addUrl = "./php/data.php?action=add_row&user_name=" + userName + "&user_age=" + userAge + "&user_sex=" + userSex;
+
+        $.ajax({
+            type:"post",
+            url:addUrl,
+            dataType:'json',
+            contentType:'application/json;charset=utf-8',
+            success:function(data){
+                console.log("success");
+            },
+            error:function(data){
+                console.log("data");
+                //添加成功后隐蒧modal框
+                setTimeout(function(){
+                    $('#exampleModal').modal('hide');
+                },500);
+                //隐藏modal框后重新加载当前页
+                setTimeout(function(){
+                    searchData();
+                },700);
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
